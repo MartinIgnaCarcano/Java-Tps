@@ -2,6 +2,8 @@ package org.example;
 
 import org.example.Entities.*;
 import org.example.Entities.DAOs.EmpresaDAO;
+import org.example.Entities.Enums.FormaPago;
+import org.example.Entities.Enums.TipoPromocion;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,6 +11,102 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) {
+
+        Imagen imagen = Imagen.builder()
+                .denominacion("Foto generica")
+                .build();
+
+        Pais pais = Pais.builder()
+                .nombre("Argentina")
+                .build();
+
+        Provincia provincia = Provincia.builder()
+                .nombre("Buenos Aires")
+                .pais(pais)
+                .build();
+
+        Localidad localidad = Localidad.builder()
+                .nombre("La Plata")
+                .provincia(provincia)
+                .build();
+
+        Domicilio domicilio = Domicilio.builder()
+                .calle("Calle Falsa")
+                .numero(123)
+                .localidad(localidad)
+                .build();
+
+        Categoria categoria = Categoria.builder()
+                .denominacion("Limpieza")
+                .build();
+
+        UnidadMedida unidad = UnidadMedida.builder()
+                .denominacion("Litros")
+                .build();
+
+        ArticuloInsumo insumo = ArticuloInsumo.builder()
+                .denominacion("Lavandina")
+                .unidadMedida(unidad)
+                .build();
+
+        ArticuloManufacturadoDetalle detalleArt = ArticuloManufacturadoDetalle.builder()
+                .cantidad(2)
+                .articuloInsumo(insumo)
+                .build();
+
+        ArticuloManufacturado articuloMan = ArticuloManufacturado.builder()
+                .denominacion("Combo limpieza")
+                .unidadMedida(unidad)
+                .build();
+
+        articuloMan.agregarArticuloManufacturadoDetalle(detalleArt);
+
+        Promocion promo = Promocion.builder()
+                .denominacion("Promo 2x1")
+                .tipoPromocion(TipoPromocion.PROMOCION_1)
+                .build();
+
+        promo.agregarArticulo(articuloMan);
+        promo.agregarImagen(imagen);
+
+        DetallePedido detallePedido = DetallePedido.builder()
+                .cantidad(1)
+                .subtotal(150)
+                .articulo(articuloMan)
+                .build();
+
+        Factura factura = Factura.builder()
+                .formaPago(FormaPago.EFECTIVO)
+                .build();
+
+        Sucursal sucursal = Sucursal.builder()
+                .nombre("Sucursal Centro")
+                .domicilio(domicilio)
+                .build();
+
+        sucursal.agregarCategoria(categoria);
+        sucursal.agregarPromocion(promo);
+
+        Pedido pedido = Pedido.builder()
+                .sucursal(sucursal)
+                .factura(factura)
+                .build();
+
+        pedido.agregarDetallePedido(detallePedido);
+
+        Usuario usuarioHard = Usuario.builder()
+                .username("admin")
+                .build();
+
+        Cliente cliente = Cliente.builder()
+                .nombre("Juan")
+                .apellido("Pérez")
+                .usuario(usuarioHard)
+                .imagen(imagen)
+                .build();
+
+        cliente.agregarDomicilio(domicilio);
+        cliente.agregarPedido(pedido);
         // Datos de conexión
         String url = "jdbc:mysql://localhost:3307/pruebas";
         String usuario = "root"; // o el usuario que tengan
@@ -16,14 +114,11 @@ public class Main {
         try(Connection conexion = DriverManager.getConnection(url,usuario,clave)){
             System.out.println("✅ ¡Conexión exitosa!");
 
-            Empresa empresa = Empresa.builder()
-                    .nombre("Nombre Empresa")
-                    .razonSocial("SA")
-                    .cuil(1345678522)
-                    .build();
 
-            Sucursal sucursal = Sucursal.builder()
-                    .nombre("Sucursal Empresa")
+            Empresa empresa = Empresa.builder()
+                    .nombre("CleanCo")
+                    .razonSocial("Clean Company S.A.")
+                    .cuil(30123456)
                     .build();
 
             empresa.agregarSucursal(sucursal);

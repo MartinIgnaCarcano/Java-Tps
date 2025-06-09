@@ -1,21 +1,21 @@
 package org.example.Entities;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class ArticuloManufacturado extends Articulo{
     private String descripcion;
     private Integer tiempoEstimadoMinutos;
     private String preparacion;
-    private List<ArticuloManufacturadoDetalle> detalles = new ArrayList<>();
+    @Builder.Default
+    private Set<ArticuloManufacturadoDetalle> detalles = new HashSet<>();
 
     public void agregarArticuloManufacturadoDetalle(ArticuloManufacturadoDetalle articuloManufacturadoDetalle){
         this.detalles.add(articuloManufacturadoDetalle);

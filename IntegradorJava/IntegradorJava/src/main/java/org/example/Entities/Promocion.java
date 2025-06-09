@@ -1,19 +1,20 @@
 package org.example.Entities;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.example.Entities.Enums.TipoPromocion;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Promocion extends Base{
     private String denominacion;
     private LocalDate fechaDesde;
@@ -23,8 +24,9 @@ public class Promocion extends Base{
     private String descripcionDescuento;
     private double precioPromocional;
     private TipoPromocion tipoPromocion;
-    private List<Imagen> imagenes= new ArrayList<>();
-    private List<Articulo> articulos = new ArrayList<>();
+    @Builder.Default
+    private Set<Imagen> imagenes= new HashSet<>();
+    private Set<Articulo> articulos = new HashSet<>();
 
     public void agregarArticulo(Articulo articulo){
         this.articulos.add(articulo);

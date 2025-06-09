@@ -17,7 +17,7 @@ public class Empresa extends Base{
     private String razonSocial;
     private Integer cuil;
     @Builder.Default
-    private List<Sucursal> sucursales= new ArrayList<>();
+    private Set<Sucursal> sucursales= new HashSet<>();
 
     public void agregarSucursal(Sucursal sucursal){
         this.sucursales.add(sucursal);

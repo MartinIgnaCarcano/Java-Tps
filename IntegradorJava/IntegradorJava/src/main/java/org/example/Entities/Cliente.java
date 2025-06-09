@@ -1,17 +1,18 @@
 package org.example.Entities;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@SuperBuilder
 public class Cliente extends Base{
     private String nombre;
     private String apellido;
@@ -20,8 +21,10 @@ public class Cliente extends Base{
     private LocalDate fechaNacimiento;
     private Usuario usuario;
     private Imagen imagen;
-    private List<Pedido> pedidos = new ArrayList<>();
-    private List<Domicilio> domicilios = new ArrayList<>();
+    @Builder.Default
+    private Set<Pedido> pedidos = new HashSet<>();
+    @Builder.Default
+    private Set<Domicilio> domicilios = new HashSet<>();
 
     public void agregarDomicilio(Domicilio domicilio){
         this.domicilios.add(domicilio);

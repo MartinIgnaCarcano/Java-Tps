@@ -3,12 +3,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Provincia extends Base {
-    private String nombre;
-    private Pais pais;
+@SuperBuilder
+public class UnidadMedida extends Base{
+    private String denominacion;
 }
